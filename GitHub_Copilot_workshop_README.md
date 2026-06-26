@@ -141,7 +141,6 @@ Underviseren bør have:
 - Et GitHub Project board klar eller næsten klar
 - Fallback-kode klar i `solution`-mapperne
 - GitHub Actions-workflows klar
-- Skærmbilleder klar til PowerPoint
 
 ## Workshopplan
 
