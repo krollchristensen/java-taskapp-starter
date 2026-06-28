@@ -1,0 +1,30 @@
+name: Java check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hent kode
+        uses: actions/checkout@v4
+
+      - name: Installer Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Compile Java
+        run: |
+          mkdir -p out
+          javac -d out src/*.java
+
+      - name: Kør program
+        run: |
+          java -cp out Main
