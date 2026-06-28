@@ -32,4 +32,23 @@ public class TaskService {
         }
         return allTasks;
     }
+
+    public Task markTaskAsCompleted(int id) {
+        Task task = findTaskById(id);
+        if (task == null) {
+            throw new IllegalArgumentException("Task med id " + id + " blev ikke fundet");
+        }
+
+        task.markAsCompleted();
+        return task;
+    }
+
+    private Task findTaskById(int id) {
+        for (int i = 0; i < taskCount; i++) {
+            if (tasks[i].getId() == id) {
+                return tasks[i];
+            }
+        }
+        return null;
+    }
 }

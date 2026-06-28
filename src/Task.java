@@ -25,6 +25,10 @@ public class Task {
         return completed;
     }
 
+    public void markAsCompleted() {
+        completed = true;
+    }
+
     public String getStatusText() {
         return completed ? "færdig" : "ikke færdig";
     }

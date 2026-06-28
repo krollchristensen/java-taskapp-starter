@@ -3,6 +3,9 @@ public class TaskServiceTest {
         shouldCreateTask();
         shouldRejectEmptyTitle();
         shouldReturnAllTasks();
+        shouldMarkTaskAsCompleted();
+        shouldRejectUnknownId();
+        shouldRejectInvalidIdInput();
         System.out.println("Alle tests bestod");
     }
 
@@ -37,6 +40,34 @@ public class TaskServiceTest {
         assertEquals("Task 2", tasks[1].getTitle(), "Anden task skal ligge som nummer to");
     }
 
+    private static void shouldMarkTaskAsCompleted() {
+        TaskService taskService = new TaskService();
+        Task task = taskService.createTask("Færdig opgave");
+
+        taskService.markTaskAsCompleted(task.getId());
+
+        assertTrue(task.isCompleted(), "Task skal være markeret som færdig");
+        assertEquals("færdig", task.getStatusText(), "Status skal være færdig");
+    }
+
+    private static void shouldRejectUnknownId() {
+        TaskService taskService = new TaskService();
+
+        try {
+            taskService.markTaskAsCompleted(99);
+            throw new AssertionError("Ukendt id skulle være afvist");
+        } catch (IllegalArgumentException expected) {
+        }
+    }
+
+    private static void shouldRejectInvalidIdInput() {
+        try {
+            Integer.parseInt("abc");
+            throw new AssertionError("Tekst skulle ikke kunne parses som tal");
+        } catch (NumberFormatException expected) {
+        }
+    }
+
     private static void assertEquals(Object expected, Object actual, String message) {
         if (!expected.equals(actual)) {
             throw new AssertionError(message + ". Forventet: " + expected + ", faktisk: " + actual);
@@ -45,6 +76,12 @@ public class TaskServiceTest {
 
     private static void assertFalse(boolean value, String message) {
         if (value) {
+            throw new AssertionError(message);
+        }
+    }
+
+    private static void assertTrue(boolean value, String message) {
+        if (!value) {
             throw new AssertionError(message);
         }
     }

@@ -15,6 +15,8 @@ public class Main {
                 createTask();
             } else if (choice.equals("2")) {
                 showAllTasks();
+            } else if (choice.equals("3")) {
+                markTaskAsCompleted();
             } else if (choice.equals("0")) {
                 running = false;
                 System.out.println("Farvel");
@@ -28,6 +30,7 @@ public class Main {
         System.out.println();
         System.out.println("1. Opret task");
         System.out.println("2. Se alle tasks");
+        System.out.println("3. Marker task som færdig");
         System.out.println("0. Afslut");
         System.out.print("Vælg: ");
     }
@@ -54,6 +57,21 @@ public class Main {
 
         for (Task task : tasks) {
             System.out.println(task);
+        }
+    }
+
+    private static void markTaskAsCompleted() {
+        System.out.print("Indtast id: ");
+        String input = scanner.nextLine();
+
+        try {
+            int id = Integer.parseInt(input);
+            Task task = taskService.markTaskAsCompleted(id);
+            System.out.println("Markeret som færdig: " + task);
+        } catch (NumberFormatException e) {
+            System.out.println("Fejl: id skal være et tal");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Fejl: " + e.getMessage());
         }
     }
 }
